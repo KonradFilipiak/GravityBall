@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
-        //makes camera follow the ball
+        // Makes camera follow the ball
 public class CameraController : MonoBehaviour {
 
-    public GameObject m_player;
+    public Ball ball;
 
-    private float m_offsetX;
+    private float offsetX;
 
     void Start()
     {
-        m_offsetX = transform.position.x - m_player.transform.position.x;
+        offsetX = transform.position.x - ball.transform.position.x;
     }
 
 	void LateUpdate ()
     {
-        transform.position = new Vector3(m_player.transform.position.x + m_offsetX, 0, -10);
+        transform.position = new Vector3(ball.transform.position.x + offsetX, 0, -10);
 	}
 }

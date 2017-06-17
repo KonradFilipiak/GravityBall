@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
-        //takes care of sounds
+        // Takes care of sounds
 public class SoundManager: MonoBehaviour
 {
     public static SoundManager instance = null;
 
-    public AudioSource m_SFXSource;
-    public AudioSource m_musicSource;
+    public AudioSource SFXSource;
+    public AudioSource musicSource;
 
     private float m_highPitchRange = 1.05f;
     private float m_lowPitchRange = 0.95f;
 
-            //makes sure SoundManager is a singleton
     void Awake()
     {
         if (instance == null)
@@ -21,20 +20,27 @@ public class SoundManager: MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-            //plays the sound
+
+    /***************************************************************************************************/
+
+        // Plays the sound
     public void PlaySound(AudioClip clip)
     {
-        m_SFXSource.pitch = RandomizePitch() * m_SFXSource.volume;
+        SFXSource.pitch = RandomizePitch() * SFXSource.volume;
 
-        m_SFXSource.clip = clip;
-        m_SFXSource.Play();
+        SFXSource.clip = clip;
+        SFXSource.Play();
     }
-            //sets AudioSources' volume
+
+        // Sets AudioSources' volume
     public void SetSoundVolume(float volume)
     {
-        m_SFXSource.volume = m_musicSource.volume = volume;
+        SFXSource.volume = musicSource.volume = volume;
     }
-            //randomize audio source pitch
+
+    /***************************************************************************************************/
+
+        // Randomizes audio source pitch
     private float RandomizePitch()
     {
         return Random.Range(m_lowPitchRange, m_highPitchRange);
