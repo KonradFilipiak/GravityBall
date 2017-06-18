@@ -5,7 +5,7 @@ public class Ball : MonoBehaviour {
 
     private const float horizontalStartSpeed = 5.0f;
     private const float horizontalMaxSpeed = 15.0f;
-    private const  float horizontalAcceleration = 0.02f;
+    private const float horizontalAcceleration = 0.02f;
 
     private float horizontalSpeed;
 
@@ -15,6 +15,9 @@ public class Ball : MonoBehaviour {
     private bool bTouchedPlatform = true;
 
     private Rigidbody rigidBody;
+
+    private Vector3 prevPos;
+    private Vector3 newPos;
 
         // Initializes variables
     void Start ()
@@ -26,6 +29,8 @@ public class Ball : MonoBehaviour {
         horizontalSpeed = horizontalStartSpeed;
 
         rigidBody = gameObject.GetComponent<Rigidbody>();
+
+        prevPos = transform.position;
 	}
 
         // Updates every frame
@@ -40,7 +45,6 @@ public class Ball : MonoBehaviour {
             if (Input.GetButtonDown("Gravity") && (bTouchedPlatform || gravityChangers > 0))
                 ChangeGravity();
         }
-
     }
     
         // Updates at the end of every frame
@@ -49,6 +53,16 @@ public class Ball : MonoBehaviour {
         if (GameManager.instance.GetGameState() == EGameState.GS_Started)
         {
             Move();
+
+            // In case the ball gets stuck - it gets move up by 0.1
+            newPos = transform.position;
+            if (prevPos == newPos)
+            {
+                newPos += new Vector3(0f, 0.1f);
+
+                transform.position = newPos;
+            }
+            prevPos = newPos;
         }
     }
     
